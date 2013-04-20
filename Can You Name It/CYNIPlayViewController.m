@@ -8,10 +8,13 @@
 
 #import "CYNIPlayViewController.h"
 #import "CYNIData.h"
-@interface CYNIPlayViewController ()
+#import "CYNI_highScoreMemory.h"
+#import "CYNIResultViewController.h"
+@interface CYNIPlayViewController () <CYNIResultdelegate>
 @property (weak, nonatomic) IBOutlet UILabel *word;
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *liveLeftLabel;
 
 @property (strong,nonatomic) CYNIData *data;
 @property (weak, nonatomic) IBOutlet UIImageView *image1;
@@ -19,10 +22,31 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image3;
 @property (weak, nonatomic) IBOutlet UIImageView *image4;
 @property (nonatomic) int rightChoice;
+@property (nonatomic) int numberOfRightChoice;
+@property (nonatomic) int score;
 @property (nonatomic) int level;
+@property (nonatomic) int lifeLeft;
+@property (nonatomic,strong) CYNI_highScoreMemory *mem;
 @end
 
 @implementation CYNIPlayViewController
+@synthesize mem = _mem;
+// <--- initialize of high score memory -->
+- (CYNI_highScoreMemory *) mem
+{
+    if (!_mem) {
+        _mem = [[CYNI_highScoreMemory alloc] init];
+    }
+    return _mem;
+}
+
+// <-- initialize of data source -->
+- (CYNIData*)data{
+    if (!_data) {
+        _data = [[CYNIData alloc] initWithPackage:self.package];
+    }
+    return _data;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,12 +57,6 @@
     return self;
 }
 
-- (CYNIData*)data{
-    if (!_data) {
-        _data = [[CYNIData alloc] initWithPackage:self.package];
-    }
-    return _data;
-}
 
 - (void)viewDidLoad
 {
@@ -46,50 +64,78 @@
 	// Do any additional setup after loading the view.
     srand(time(NULL));
     self.level = 1;
+    self.numberOfRightChoice = 0;
+    self.score = 0;
+    self.lifeLeft = 5;
     [self setupDisplay];
     }
+- (IBAction)stopPressed:(id)sender {
+    [self stopPlaying];
+}
+     
 - (IBAction)image1Tapped:(id)sender {
     if (self.rightChoice==0) {
         self.level++;
+        self.numberOfRightChoice++;
+        self.score = self.score + 100;
         [self setupDisplay];
     }
     else{
-       // [self setupDisplay];
+        self.level++;
+        self.lifeLeft --;
+       [self setupDisplay];
+        
     }
     //NSLog(@"Inside");
 }
 - (IBAction)image2Tapped:(id)sender {
     if (self.rightChoice==1) {
         self.level++;
+        self.numberOfRightChoice++;
+        self.score = self.score + 100;
         [self setupDisplay];
     }
     else{
-       // [self setupDisplay];
+        self.level++;
+        self.lifeLeft --;
+       [self setupDisplay];
     }
 }
 - (IBAction)image3Tapped:(id)sender {
     if (self.rightChoice==2) {
         self.level++;
+        self.numberOfRightChoice++;
+        self.score = self.score + 100;
         [self setupDisplay];
     }
     else{
-        // [self setupDisplay];
+        self.level++;
+        self.lifeLeft --;
+        [self setupDisplay];
     }
 }
 - (IBAction)image4Tapped:(id)sender {
     if (self.rightChoice==3) {
         self.level++;
+        self.numberOfRightChoice++;
+        self.score = self.score + 100;
         [self setupDisplay];
     }
     else{
-        // [self setupDisplay];
+        self.level++;
+        self.lifeLeft --;
+        [self setupDisplay];
     }
 }
 
 - (void)setupDisplay{
+    if (self.lifeLeft == 0) {
+        [self stopPlaying];
+    }
     self.rightChoice = rand()%4;
     self.levelLabel.text = [NSString stringWithFormat:@"Level %d",self.level];
-    self.scoreLabel.text = [NSString stringWithFormat:@"%d",(self.level-1)*100];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d",self.score];
+    self.liveLeftLabel.text = [NSString stringWithFormat:@"%d",self.lifeLeft];
     NSString* image1Name = [self.data takeRandomImage];
     [self.image1 setImage:[UIImage imageWithContentsOfFile:image1Name]];
     
@@ -141,5 +187,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)stopPlaying
+{
+    NSString *score = [NSString stringWithFormat:@"%d",self.score];
+    NSLog(@"%@",score);
+    [self.mem overWrittenHighScore:score];
+    CYNIResultViewController * detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ResultVC"];
+	detailVC.textForlabel = [NSString stringWithFormat:@"%d",self.score];
+    detailVC.textForAnswer = [NSString stringWithFormat:@"%d",self.level];
+    detailVC.textForRight = [NSString stringWithFormat:@"%d",self.numberOfRightChoice];
+	detailVC.delegate = self;
+	[self presentViewController:detailVC animated:YES completion:nil];
+
+}
+
+- (void) dismissMe:(UIViewController *) viewController {
+    [self viewDidLoad];
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

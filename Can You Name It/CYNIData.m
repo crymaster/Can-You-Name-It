@@ -38,6 +38,7 @@
     NSString *temp;
     int index;
     do{
+        //index = 0;
         index = rand()%self.imageArray.count;
         temp = [self.imageArray objectAtIndex:index];
     }while ([temp isEqualToString:@"0"]);
