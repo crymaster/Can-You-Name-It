@@ -195,7 +195,7 @@
     [self.mem overWrittenHighScore:score];
     CYNIResultViewController * detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ResultVC"];
 	detailVC.textForlabel = [NSString stringWithFormat:@"%d",self.score];
-    detailVC.textForAnswer = [NSString stringWithFormat:@"%d",self.level];
+    detailVC.textForAnswer = [NSString stringWithFormat:@"%d",self.level-1];
     detailVC.textForRight = [NSString stringWithFormat:@"%d",self.numberOfRightChoice];
 	detailVC.delegate = self;
 	[self presentViewController:detailVC animated:YES completion:nil];

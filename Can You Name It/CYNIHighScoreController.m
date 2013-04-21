@@ -15,7 +15,7 @@
 @end
 
 @implementation CYNIHighScoreController
-@synthesize mem = _mem;
+//@synthesize mem = _mem;
 
 - (CYNI_highScoreMemory *) mem
 {

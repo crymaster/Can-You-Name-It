@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol CYNIModeViewControllerDelegate;
+
 @interface CYNIModeViewController : UIViewController
-@property (weak,nonatomic) id <CYNIModeViewControllerDelegate> delegate;
+
 @end
 
-@protocol CYNIModeViewControllerDelegate <NSObject>
-- (void)userDismissModeViewController: (CYNIModeViewController *)vc;
-@end

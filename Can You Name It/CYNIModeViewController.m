@@ -35,7 +35,8 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)backPressed:(id)sender {
-    [self.delegate userDismissModeViewController:self];
+    //[self.delegate userDismissModeViewController:self];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

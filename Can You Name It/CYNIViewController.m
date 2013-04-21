@@ -8,15 +8,12 @@
 
 #import "CYNIViewController.h"
 #import "CYNIModeViewController.h"
-@interface CYNIViewController ()<CYNIModeViewControllerDelegate>
+@interface CYNIViewController ()
 
 @end
 
 @implementation CYNIViewController
 
-- (void)userDismissModeViewController:(CYNIModeViewController *)vc{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -29,8 +26,8 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    CYNIModeViewController *mode = segue.destinationViewController;
-    mode.delegate = self;
+    //CYNIModeViewController *mode = segue.destinationViewController;
+    //mode.delegate = self;
 }
 - (IBAction)credit:(id)sender {
     NSFileManager *filemng;
