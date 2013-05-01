@@ -14,9 +14,11 @@
     if(self){
         NSFileManager *filemng;
         filemng =[NSFileManager defaultManager];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-        basePath = [NSString stringWithFormat:@"%@/%@",basePath,package];
+        //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        //NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+        //basePath = [NSString stringWithFormat:@"%@/%@",basePath,package];
+        NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingFormat:@"/database ios/%@",package];
+        NSLog(@"%@",basePath);
         [filemng changeCurrentDirectoryPath:basePath];
         NSArray* file = [filemng contentsOfDirectoryAtPath:basePath error:nil];
         _imageArray = [[NSMutableArray alloc] initWithCapacity:file.count];

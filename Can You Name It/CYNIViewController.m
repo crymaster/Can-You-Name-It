@@ -57,7 +57,7 @@
     
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) @"kUTTypeMovie", nil];
+    imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera] ;
     imagePicker.editing = NO;
     imagePicker.delegate = delegate;
     [controller presentViewController:imagePicker animated:YES completion:nil];
