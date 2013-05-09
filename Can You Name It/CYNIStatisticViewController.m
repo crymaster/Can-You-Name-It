@@ -2,7 +2,7 @@
 //  CYNIStatisticViewController.m
 //  Can You Name It
 //
-//  Created by hust4 on 4/14/13.
+//  Created by hust4 on 5/2/13.
 //  Copyright (c) 2013 NGUYEN HOANG SON. All rights reserved.
 //
 

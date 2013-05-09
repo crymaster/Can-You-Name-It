@@ -18,6 +18,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *sourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"database ios"];
+    NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"Files"];
+    NSLog(@"Source Path: %@\n Documents Path: %@ \n Folder Path: %@", sourcePath, documentsDirectory, folderPath);
+    
+    NSError *error=nil;
+    
+    if([[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:folderPath error:&error]){
+        NSLog(@"File successfully copied");
+    } else {
+        NSLog(@"Error description-%@ \n", [error localizedDescription]);
+        NSLog(@"Error reason-%@", [error localizedFailureReason]);
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,8 +78,8 @@
 }
 
 - (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
-    
-    [[picker parentViewController] dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    //[[picker parentViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 // For responding to the user accepting a newly-captured picture or movie
@@ -87,8 +100,21 @@
         } else {
             imageToSave = originalImage;
         }
-        
+    
         // Save the new image (original or edited) to the Camera Roll
-        UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
+        //UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
+    NSData* data = UIImageJPEGRepresentation(imageToSave,1.0);
+    //NSString* path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"database ios/Place/"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"Files/Place/abc.jpg"];
+    //NSLog(@"%@",[path stringByAppendingPathComponent:@"abc.jpg"]);
+    if([data writeToFile:path atomically:YES]){
+        NSLog(@"Done");
+    }
+    NSFileManager* man = [NSFileManager defaultManager];
+    NSLog(@"%@",[man contentsOfDirectoryAtPath:path error:nil]);
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end
