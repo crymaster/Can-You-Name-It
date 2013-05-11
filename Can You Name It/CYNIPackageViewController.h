@@ -10,5 +10,4 @@
 
 @interface CYNIPackageViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *packageName;
-
 @end

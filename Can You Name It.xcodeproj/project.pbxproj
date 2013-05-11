@@ -24,9 +24,9 @@
 		A58DC478170F2F450023F38A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58DC476170F2F450023F38A /* MainStoryboard.storyboard */; };
 		A58DC47B170F2F450023F38A /* CYNIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58DC47A170F2F450023F38A /* CYNIViewController.m */; };
 		A58E44D7171AC39500D1F49C /* CYNI_highScoreMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E44D6171AC39500D1F49C /* CYNI_highScoreMemory.m */; };
-		A58E44DB171ACF4C00D1F49C /* CYNIHighScoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E44DA171ACF4C00D1F49C /* CYNIHighScoreController.m */; };
 		A58E44DE171AE2BE00D1F49C /* CYNIResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E44DD171AE2BE00D1F49C /* CYNIResultViewController.m */; };
 		A58F3EE017326D6D004CED4D /* CYNIStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58F3EDF17326D6D004CED4D /* CYNIStatisticViewController.m */; };
+		A591557B173EC1BD008B4B82 /* CYNISaveImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A591557A173EC1BD008B4B82 /* CYNISaveImageViewController.m */; };
 		A5926A2417127416008900C4 /* CYNIPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5926A2317127416008900C4 /* CYNIPackageViewController.m */; };
 		A593606A17317D73003CCB76 /* database ios in Resources */ = {isa = PBXBuildFile; fileRef = A593606917317D73003CCB76 /* database ios */; };
 /* End PBXBuildFile section */
@@ -58,12 +58,12 @@
 		A58DC47A170F2F450023F38A /* CYNIViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CYNIViewController.m; sourceTree = "<group>"; };
 		A58E44D5171AC39500D1F49C /* CYNI_highScoreMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNI_highScoreMemory.h; sourceTree = "<group>"; };
 		A58E44D6171AC39500D1F49C /* CYNI_highScoreMemory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNI_highScoreMemory.m; sourceTree = "<group>"; };
-		A58E44D9171ACF4C00D1F49C /* CYNIHighScoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNIHighScoreController.h; sourceTree = "<group>"; };
-		A58E44DA171ACF4C00D1F49C /* CYNIHighScoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNIHighScoreController.m; sourceTree = "<group>"; };
 		A58E44DC171AE2BE00D1F49C /* CYNIResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNIResultViewController.h; sourceTree = "<group>"; };
 		A58E44DD171AE2BE00D1F49C /* CYNIResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNIResultViewController.m; sourceTree = "<group>"; };
 		A58F3EDE17326D6D004CED4D /* CYNIStatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNIStatisticViewController.h; sourceTree = "<group>"; };
 		A58F3EDF17326D6D004CED4D /* CYNIStatisticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNIStatisticViewController.m; sourceTree = "<group>"; };
+		A5915579173EC1BD008B4B82 /* CYNISaveImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNISaveImageViewController.h; sourceTree = "<group>"; };
+		A591557A173EC1BD008B4B82 /* CYNISaveImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNISaveImageViewController.m; sourceTree = "<group>"; };
 		A5926A2217127416008900C4 /* CYNIPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNIPackageViewController.h; sourceTree = "<group>"; };
 		A5926A2317127416008900C4 /* CYNIPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNIPackageViewController.m; sourceTree = "<group>"; };
 		A593606917317D73003CCB76 /* database ios */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "database ios"; sourceTree = "<group>"; };
@@ -119,6 +119,8 @@
 				A58DC46D170F2F440023F38A /* CYNIAppDelegate.h */,
 				A58DC46E170F2F450023F38A /* CYNIAppDelegate.m */,
 				A58DC476170F2F450023F38A /* MainStoryboard.storyboard */,
+				A5915579173EC1BD008B4B82 /* CYNISaveImageViewController.h */,
+				A591557A173EC1BD008B4B82 /* CYNISaveImageViewController.m */,
 				A5926A2217127416008900C4 /* CYNIPackageViewController.h */,
 				A5926A2317127416008900C4 /* CYNIPackageViewController.m */,
 				A58BB11317100B1B00A3B53E /* CYNIPlayViewController.h */,
@@ -129,8 +131,6 @@
 				A58DC47A170F2F450023F38A /* CYNIViewController.m */,
 				A58E44D5171AC39500D1F49C /* CYNI_highScoreMemory.h */,
 				A58E44D6171AC39500D1F49C /* CYNI_highScoreMemory.m */,
-				A58E44D9171ACF4C00D1F49C /* CYNIHighScoreController.h */,
-				A58E44DA171ACF4C00D1F49C /* CYNIHighScoreController.m */,
 				A58E44DC171AE2BE00D1F49C /* CYNIResultViewController.h */,
 				A58E44DD171AE2BE00D1F49C /* CYNIResultViewController.m */,
 				A58DC465170F2F440023F38A /* Supporting Files */,
@@ -241,10 +241,10 @@
 				A58BB1191710122400A3B53E /* CYNIData.m in Sources */,
 				A5926A2417127416008900C4 /* CYNIPackageViewController.m in Sources */,
 				A58E44D7171AC39500D1F49C /* CYNI_highScoreMemory.m in Sources */,
-				A58E44DB171ACF4C00D1F49C /* CYNIHighScoreController.m in Sources */,
 				A58E44DE171AE2BE00D1F49C /* CYNIResultViewController.m in Sources */,
 				A58F3EE017326D6D004CED4D /* CYNIStatisticViewController.m in Sources */,
 				969DCEF2173BE6060047AD51 /* CYNIImagePlayViewController.m in Sources */,
+				A591557B173EC1BD008B4B82 /* CYNISaveImageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

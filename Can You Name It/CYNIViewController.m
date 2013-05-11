@@ -7,8 +7,8 @@
 //
 
 #import "CYNIViewController.h"
+#import "CYNISaveImageViewController.h"
 @interface CYNIViewController () <UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
 @end
 
 @implementation CYNIViewController
@@ -50,17 +50,7 @@
     //mode.delegate = self;
 }
 - (IBAction)credit:(id)sender {
-    NSFileManager *filemng;
-    filemng =[NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    NSLog(@"%@",basePath);
-    [filemng changeCurrentDirectoryPath:basePath];
-    //NSArray* file = [filemng contentsOfDirectoryAtPath:basePath error:nil];
-    NSArray* file = [filemng contentsOfDirectoryAtPath:filemng.currentDirectoryPath error:nil];
-    for (int i=0; i<file.count; i++) {
-        NSLog(@"%@",[file objectAtIndex:i]);
-    }
+    
 }
 - (IBAction)takePhotoPressed:(id)sender {
     [self startCameraControllerFromViewController:self usingDelegate:self];
@@ -112,16 +102,11 @@
         //UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
     NSData* data = UIImageJPEGRepresentation(imageToSave,1.0);
     //NSString* path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"database ios/Place/"];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"Files/Place/abc.jpg"];
-    //NSLog(@"%@",[path stringByAppendingPathComponent:@"abc.jpg"]);
-    if([data writeToFile:path atomically:YES]){
-        NSLog(@"Done");
-    }
-    NSFileManager* man = [NSFileManager defaultManager];
-    NSLog(@"%@",[man contentsOfDirectoryAtPath:path error:nil]);
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    CYNISaveImageViewController *saveViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SaveImage"];
+    saveViewController.data = data;
+    [self presentViewController:saveViewController animated:YES completion:nil];
+   
+    //[picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
