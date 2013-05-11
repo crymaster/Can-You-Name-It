@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NSString *textForlabel;
 @property (strong, nonatomic) NSString *textForAnswer;
 @property (strong, nonatomic) NSString *textForRight;
+@property (nonatomic) int highScoreFlag;
 @property (weak, nonatomic) id<CYNIResultdelegate> delegate;
 @end

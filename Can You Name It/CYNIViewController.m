@@ -7,7 +7,6 @@
 //
 
 #import "CYNIViewController.h"
-#import "CYNIModeViewController.h"
 @interface CYNIViewController () <UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @end
@@ -25,6 +24,14 @@
     
     NSError *error=nil;
     
+    if([[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:folderPath error:&error]){
+        NSLog(@"File successfully copied");
+    } else {
+        NSLog(@"Error description-%@ \n", [error localizedDescription]);
+        NSLog(@"Error reason-%@", [error localizedFailureReason]);
+    }
+    sourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"cover"];
+    folderPath = [documentsDirectory stringByAppendingPathComponent:@"cover"];
     if([[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:folderPath error:&error]){
         NSLog(@"File successfully copied");
     } else {

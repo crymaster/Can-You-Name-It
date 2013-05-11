@@ -15,7 +15,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *liveLeftLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *heart1;
+@property (weak, nonatomic) IBOutlet UIImageView *heart2;
+@property (weak, nonatomic) IBOutlet UIImageView *heart3;
+@property (weak, nonatomic) IBOutlet UIImageView *heart4;
+@property (weak, nonatomic) IBOutlet UIImageView *heart5;
+@property (strong,nonatomic) NSArray *heartArray;
 @property (strong,nonatomic) CYNIData *data;
 @property (weak, nonatomic) IBOutlet UIImageView *image1;
 @property (weak, nonatomic) IBOutlet UIImageView *image2;
@@ -67,6 +72,14 @@
     self.numberOfRightChoice = 0;
     self.score = 0;
     self.lifeLeft = 5;
+    NSString* path = [[[NSBundle mainBundle] resourcePath] stringByAppendingFormat:@"/images/playscr/heart.png"];
+    UIImage *heart = [UIImage imageWithContentsOfFile:path];
+    [self.heart1 setImage:heart];
+    [self.heart2 setImage:heart];
+    [self.heart3 setImage:heart];
+    [self.heart4 setImage:heart];
+    [self.heart5 setImage:heart];
+    self.heartArray = [NSArray arrayWithObjects:self.heart1, self.heart2,self.heart3,self.heart4,self.heart5, nil];
     [self setupDisplay];
     }
 - (IBAction)stopPressed:(id)sender {
@@ -83,10 +96,9 @@
     else{
         self.level++;
         self.lifeLeft --;
-       [self setupDisplay];
-        
+        [self.heartArray[self.lifeLeft] setImage:nil];
+        [self setupDisplay];
     }
-    //NSLog(@"Inside");
 }
 - (IBAction)image2Tapped:(id)sender {
     if (self.rightChoice==1) {
@@ -98,7 +110,8 @@
     else{
         self.level++;
         self.lifeLeft --;
-       [self setupDisplay];
+        [self.heartArray[self.lifeLeft] setImage:nil];
+        [self setupDisplay];
     }
 }
 - (IBAction)image3Tapped:(id)sender {
@@ -111,6 +124,7 @@
     else{
         self.level++;
         self.lifeLeft --;
+        [self.heartArray[self.lifeLeft] setImage:nil];
         [self setupDisplay];
     }
 }
@@ -124,6 +138,7 @@
     else{
         self.level++;
         self.lifeLeft --;
+        [self.heartArray[self.lifeLeft] setImage:nil];
         [self setupDisplay];
     }
 }
@@ -133,7 +148,7 @@
         [self stopPlaying];
     }
     self.rightChoice = rand()%4;
-    self.levelLabel.text = [NSString stringWithFormat:@"Level %d",self.level];
+    self.levelLabel.text = [NSString stringWithFormat:@"Lv %d",self.level];
     self.scoreLabel.text = [NSString stringWithFormat:@"%d",self.score];
     self.liveLeftLabel.text = [NSString stringWithFormat:@"%d",self.lifeLeft];
     NSString* image1Name = [self.data takeRandomImage];
@@ -192,8 +207,8 @@
 {
     NSString *score = [NSString stringWithFormat:@"%d",self.score];
     NSLog(@"%@",score);
-    [self.mem overWrittenHighScore:score];
     CYNIResultViewController * detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ResultVC"];
+    detailVC.highScoreFlag = [self.mem overWrittenHighScore:score];
 	detailVC.textForlabel = [NSString stringWithFormat:@"%d",self.score];
     detailVC.textForAnswer = [NSString stringWithFormat:@"%d",self.level-1];
     detailVC.textForRight = [NSString stringWithFormat:@"%d",self.numberOfRightChoice];

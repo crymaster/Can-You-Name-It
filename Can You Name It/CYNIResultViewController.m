@@ -10,8 +10,9 @@
 
 @interface CYNIResultViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *displayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *AnswerNumLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *RightNumLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *highScoreView;
 
 @end
 
@@ -30,8 +31,12 @@
 {
     [super viewDidLoad];
     self.displayLabel.text = self.textForlabel;
-    self.AnswerNumLabel.text = self.textForAnswer;
-    self.RightNumLabel.text = self.textForRight;
+    self.RightNumLabel.text = [self.textForRight stringByAppendingFormat:@"/%@",self.textForAnswer];
+    if(self.highScoreFlag){
+        NSString* path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/images/result/new high score.png"];
+        UIImage *highScoreImage = [UIImage imageWithContentsOfFile:path];
+        [self.highScoreView setImage:highScoreImage];
+    }
 	// Do any additional setup after loading the view.
 }
 
