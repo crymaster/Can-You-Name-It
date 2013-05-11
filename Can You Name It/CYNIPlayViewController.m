@@ -209,6 +209,7 @@
     NSLog(@"%@",score);
     CYNIResultViewController * detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ResultVC"];
     detailVC.highScoreFlag = [self.mem overWrittenHighScore:score];
+    detailVC.textForHighScore = [self.mem loadScore];
 	detailVC.textForlabel = [NSString stringWithFormat:@"%d",self.score];
     detailVC.textForAnswer = [NSString stringWithFormat:@"%d",self.level-1];
     detailVC.textForRight = [NSString stringWithFormat:@"%d",self.numberOfRightChoice];
