@@ -324,8 +324,14 @@
         default:
             break;
     }
-    NSArray* components = [wordInImage componentsSeparatedByString:@".jpg"];
-    self.word.text = [components objectAtIndex:0];
+    NSArray* components;
+    if ([wordInImage hasSuffix:@".jpg"]) {
+        components = [wordInImage componentsSeparatedByString:@".jpg"];
+    }
+    else{
+        components = [wordInImage componentsSeparatedByString:@".png"];
+    }
+        self.word.text = [components objectAtIndex:0];
     NSLog(@"%d",self.rightChoice);
 }
 

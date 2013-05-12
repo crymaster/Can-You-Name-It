@@ -27,7 +27,7 @@
         NSLog(@"%d",file.count);
         for (int i=0,j=0; i<file.count; i++) {
             imageName = [file objectAtIndex:i];
-            if ([imageName hasSuffix:@".jpg"]) {
+            if ([imageName hasSuffix:@".jpg"]||[imageName hasSuffix:@".png"]) {
                 [_imageArray addObject:imageName];
                 NSLog(@"%@",[_imageArray objectAtIndex:j]);
                 j++;

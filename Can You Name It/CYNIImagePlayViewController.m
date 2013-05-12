@@ -327,19 +327,40 @@
             break;
     }
     
-    NSArray* components = [image1Name componentsSeparatedByString:@".jpg"];
+    NSArray* components;
+    if ([image1Name hasSuffix:@".jpg"]) {
+        components = [image1Name componentsSeparatedByString:@".jpg"];
+    }
+    else{
+        components = [image1Name componentsSeparatedByString:@".png"];
+    }
     image1Name = [components objectAtIndex:0];
     [self.answerButton1 setTitle:image1Name forState:NULL];
     
-    components = [image2Name componentsSeparatedByString:@".jpg"];
+    if ([image2Name hasSuffix:@".jpg"]) {
+        components = [image2Name componentsSeparatedByString:@".jpg"];
+    }
+    else{
+        components = [image2Name componentsSeparatedByString:@".png"];
+    }
     image2Name = [components objectAtIndex:0];
     [self.answerButton2 setTitle:image2Name forState:NULL];
     
-    components = [image3Name componentsSeparatedByString:@".jpg"];
+    if ([image3Name hasSuffix:@".jpg"]) {
+        components = [image3Name componentsSeparatedByString:@".jpg"];
+    }
+    else{
+        components = [image3Name componentsSeparatedByString:@".png"];
+    }
     image3Name = [components objectAtIndex:0];
     [self.answerButton3 setTitle:image3Name forState:NULL];
     
-    components = [image4Name componentsSeparatedByString:@".jpg"];
+    if ([image4Name hasSuffix:@".jpg"]) {
+        components = [image4Name componentsSeparatedByString:@".jpg"];
+    }
+    else{
+        components = [image4Name componentsSeparatedByString:@".png"];
+    }
     image4Name = [components objectAtIndex:0];
     [self.answerButton4 setTitle:image4Name forState:NULL];
 }
