@@ -70,6 +70,9 @@
     imageViewController.package = self.packageName.text;
     [self presentViewController:imageViewController animated:YES completion:nil];
 }
+- (IBAction)back:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {
