@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image2;
 @property (weak, nonatomic) IBOutlet UIImageView *image3;
 @property (weak, nonatomic) IBOutlet UIImageView *image4;
+@property (weak, nonatomic) IBOutlet UIImageView *tick;
+@property (weak, nonatomic) IBOutlet UIImageView *cross;
 @property (nonatomic) int rightChoice;
 @property (nonatomic) int numberOfRightChoice;
 @property (nonatomic) int score;
@@ -61,13 +63,17 @@
     }
     return self;
 }
-
+-(void)viewDidAppear:(BOOL)animated{
+    
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     srand(time(NULL));
+    self.tick.alpha = 0;
+    self.cross.alpha = 0;
     self.level = 1;
     self.numberOfRightChoice = 0;
     self.score = 0;
@@ -85,61 +91,187 @@
 - (IBAction)stopPressed:(id)sender {
     [self stopPlaying];
 }
-     
+
+- (void)correctNumber:(int)no{
+    CGRect rect = self.tick.frame;
+    switch (no) {
+        case 0:
+            rect.origin.x =60;
+            rect.origin.y =210;
+            break;
+        case 1:
+            rect.origin.x =210;
+            rect.origin.y =210;
+            break;
+        case 2:
+            rect.origin.x =60;
+            rect.origin.y =363;
+            break;
+        case 3:
+            rect.origin.x =210;
+            rect.origin.y =363;
+            break;
+        default:
+            break;
+    }
+    self.tick.frame=rect;
+    rect.origin.y+=70;
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                                    self.tick.frame=rect;
+                                }
+                     completion:nil];
+    
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                                    self.tick.alpha = 1;
+                                }
+                     completion:^(BOOL finished){
+        if(finished){
+            self.level++;
+            self.numberOfRightChoice++;
+            self.score = self.score + 100;
+            [UIView animateWithDuration:1
+                             animations:^{self.tick.alpha = 0;}
+                             completion:^(BOOL finished){
+                                                            if (finished) {
+                                                                [self setupDisplay];
+                                                            }
+                            }
+            ];
+        }
+    }];
+}
+
+- (void)wrongNumber:(int)no{
+    CGRect rect = self.cross.frame;
+    CGRect rect1 = self.tick.frame;
+    switch (no) {
+        case 0:
+            rect.origin.x =60;
+            rect.origin.y =210;
+            break;
+        case 1:
+            rect.origin.x =210;
+            rect.origin.y =210;
+            break;
+        case 2:
+            rect.origin.x =60;
+            rect.origin.y =363;
+            break;
+        case 3:
+            rect.origin.x =210;
+            rect.origin.y =363;
+            break;
+        default:
+            break;
+    }
+    self.cross.frame=rect;
+    rect.origin.y += 70;
+    switch (self.rightChoice) {
+        case 0:
+            rect1.origin.x =60;
+            rect1.origin.y =210;
+            break;
+        case 1:
+            rect1.origin.x =210;
+            rect1.origin.y =210;
+            break;
+        case 2:
+            rect1.origin.x =60;
+            rect1.origin.y =363;
+            break;
+        case 3:
+            rect1.origin.x =210;
+            rect1.origin.y =363;
+            break;
+        default:
+            break;
+    }
+    self.tick.frame=rect1;
+    rect1.origin.y += 70;
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                         self.cross.frame=rect;
+                     }
+                     completion:nil];
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                         self.tick.frame=rect1;
+                     }
+                     completion:nil];
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                         self.tick.alpha=1;
+                     }
+                     completion:^(BOOL finished){
+                         if(finished){
+                             [UIView animateWithDuration:1
+                                              animations:^{self.tick.alpha = 0;}
+                              ];
+                         }
+                     }];
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationCurveLinear
+                     animations:^{
+                         self.cross.alpha = 1;
+                     }
+                     completion:^(BOOL finished){
+                         if(finished){
+                             self.level++;
+                             self.lifeLeft --;
+                             [self.heartArray[self.lifeLeft] setImage:nil];
+                             [UIView animateWithDuration:1
+                                              animations:^{self.cross.alpha = 0;}
+                                              completion:^(BOOL finished){
+                                                  if (finished) {
+                                                      [self setupDisplay];
+                                                  }
+                                              }
+                              ];
+                         }
+                     }];
+}
+
 - (IBAction)image1Tapped:(id)sender {
     if (self.rightChoice==0) {
-        self.level++;
-        self.numberOfRightChoice++;
-        self.score = self.score + 100;
-        [self setupDisplay];
+        [self correctNumber:0];
     }
     else{
-        self.level++;
-        self.lifeLeft --;
-        [self.heartArray[self.lifeLeft] setImage:nil];
-        [self setupDisplay];
+        [self wrongNumber:0];
     }
 }
 - (IBAction)image2Tapped:(id)sender {
     if (self.rightChoice==1) {
-        self.level++;
-        self.numberOfRightChoice++;
-        self.score = self.score + 100;
-        [self setupDisplay];
-    }
+        [self correctNumber:1];    }
     else{
-        self.level++;
-        self.lifeLeft --;
-        [self.heartArray[self.lifeLeft] setImage:nil];
-        [self setupDisplay];
-    }
+        [self wrongNumber:1];    }
 }
 - (IBAction)image3Tapped:(id)sender {
     if (self.rightChoice==2) {
-        self.level++;
-        self.numberOfRightChoice++;
-        self.score = self.score + 100;
-        [self setupDisplay];
+        [self correctNumber:2];
     }
     else{
-        self.level++;
-        self.lifeLeft --;
-        [self.heartArray[self.lifeLeft] setImage:nil];
-        [self setupDisplay];
+        [self wrongNumber:2];
     }
 }
 - (IBAction)image4Tapped:(id)sender {
     if (self.rightChoice==3) {
-        self.level++;
-        self.numberOfRightChoice++;
-        self.score = self.score + 100;
-        [self setupDisplay];
+        [self correctNumber:3];
     }
     else{
-        self.level++;
-        self.lifeLeft --;
-        [self.heartArray[self.lifeLeft] setImage:nil];
-        [self setupDisplay];
+        [self wrongNumber:3];
     }
 }
 
