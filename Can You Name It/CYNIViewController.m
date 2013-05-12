@@ -50,10 +50,7 @@
     //CYNIModeViewController *mode = segue.destinationViewController;
     //mode.delegate = self;
 }
-- (IBAction)credit:(id)sender {
-    CYNISaveImageViewController *saveViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SaveImage"];
-    [self presentViewController:saveViewController animated:YES completion:nil];
-}
+
 - (IBAction)takePhotoPressed:(id)sender {
     
     CYNISaveImageViewController *saveViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SaveImage"];

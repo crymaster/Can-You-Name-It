@@ -29,6 +29,7 @@
 		A591557B173EC1BD008B4B82 /* CYNISaveImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A591557A173EC1BD008B4B82 /* CYNISaveImageViewController.m */; };
 		A5926A2417127416008900C4 /* CYNIPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5926A2317127416008900C4 /* CYNIPackageViewController.m */; };
 		A593606A17317D73003CCB76 /* database ios in Resources */ = {isa = PBXBuildFile; fileRef = A593606917317D73003CCB76 /* database ios */; };
+		A594D687173FA85500D9738F /* CYNIHTPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A594D686173FA85500D9738F /* CYNIHTPViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,8 @@
 		A5926A2217127416008900C4 /* CYNIPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNIPackageViewController.h; sourceTree = "<group>"; };
 		A5926A2317127416008900C4 /* CYNIPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNIPackageViewController.m; sourceTree = "<group>"; };
 		A593606917317D73003CCB76 /* database ios */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "database ios"; sourceTree = "<group>"; };
+		A594D685173FA85500D9738F /* CYNIHTPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYNIHTPViewController.h; sourceTree = "<group>"; };
+		A594D686173FA85500D9738F /* CYNIHTPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYNIHTPViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,8 @@
 				A58DC46D170F2F440023F38A /* CYNIAppDelegate.h */,
 				A58DC46E170F2F450023F38A /* CYNIAppDelegate.m */,
 				A58DC476170F2F450023F38A /* MainStoryboard.storyboard */,
+				A594D685173FA85500D9738F /* CYNIHTPViewController.h */,
+				A594D686173FA85500D9738F /* CYNIHTPViewController.m */,
 				A5915579173EC1BD008B4B82 /* CYNISaveImageViewController.h */,
 				A591557A173EC1BD008B4B82 /* CYNISaveImageViewController.m */,
 				A5926A2217127416008900C4 /* CYNIPackageViewController.h */,
@@ -245,6 +250,7 @@
 				A58F3EE017326D6D004CED4D /* CYNIStatisticViewController.m in Sources */,
 				969DCEF2173BE6060047AD51 /* CYNIImagePlayViewController.m in Sources */,
 				A591557B173EC1BD008B4B82 /* CYNISaveImageViewController.m in Sources */,
+				A594D687173FA85500D9738F /* CYNIHTPViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
