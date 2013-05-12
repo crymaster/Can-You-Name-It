@@ -7,11 +7,12 @@
 //
 
 #import "CYNIResultViewController.h"
+#import "CYNIStatisticViewController.h"
 
-@interface CYNIResultViewController ()
+@interface CYNIResultViewController () <CYNIStatisticDelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *displayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *highscoreLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *RightNumLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *highScoreView;
 
@@ -52,5 +53,21 @@
     [self.delegate dismissMe:self];
 }
 
+- (IBAction)statisticPressed:(id)sender {
+    CYNIStatisticViewController * statisticVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StatisticVC"];
+	statisticVC.textForlabel = self.textForlabel;
+    statisticVC.textForAnswer = self.textForAnswer;
+    statisticVC.textForRight = self.textForRight;
+    statisticVC.statisticData = self.statisticData;
+    statisticVC.highScoreFlag = self.highScoreFlag;
+    statisticVC.textForHighScore = self.textForHighScore;
+	statisticVC.delegate = self;
+	[self presentViewController:statisticVC animated:YES completion:nil];
+}
+
+- (void) dismissMe:(UIViewController *) viewController {
+    [self viewDidLoad];
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

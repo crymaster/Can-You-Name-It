@@ -10,7 +10,10 @@
 #import "CYNIData.h"
 #import "CYNI_highScoreMemory.h"
 #import "CYNIResultViewController.h"
+#import "StatisticData.h"
+
 @interface CYNIPlayViewController () <CYNIResultdelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *word;
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
@@ -29,15 +32,24 @@
 @property (weak, nonatomic) IBOutlet UIImageView *tick;
 @property (weak, nonatomic) IBOutlet UIImageView *cross;
 @property (nonatomic) int rightChoice;
+@property (nonatomic) NSString *rightImage;
+@property (nonatomic) NSString *image1Name;
+@property (nonatomic) NSString *image2Name;
+@property (nonatomic) NSString *image3Name;
+@property (nonatomic) NSString *image4Name;
 @property (nonatomic) int numberOfRightChoice;
 @property (nonatomic) int score;
 @property (nonatomic) int level;
 @property (nonatomic) int lifeLeft;
 @property (nonatomic,strong) CYNI_highScoreMemory *mem;
+@property (strong, nonatomic) StatisticData *statisticData;
+
 @end
 
 @implementation CYNIPlayViewController
+
 @synthesize mem = _mem;
+
 // <--- initialize of high score memory -->
 - (CYNI_highScoreMemory *) mem
 {
@@ -55,6 +67,12 @@
     return _data;
 }
 
+-(StatisticData *) statisticData {
+    if(_statisticData == nil)
+        _statisticData = [[StatisticData alloc] init];
+    return _statisticData;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -63,6 +81,7 @@
     }
     return self;
 }
+
 -(void)viewDidAppear:(BOOL)animated{
     
 }
@@ -87,7 +106,8 @@
     [self.heart5 setImage:heart];
     self.heartArray = [NSArray arrayWithObjects:self.heart1, self.heart2,self.heart3,self.heart4,self.heart5, nil];
     [self setupDisplay];
-    }
+}
+
 - (IBAction)stopPressed:(id)sender {
     [self stopPlaying];
 }
@@ -120,31 +140,31 @@
                           delay:0
                         options:UIViewAnimationCurveEaseOut
                      animations:^{
-                                    self.tick.frame=rect;
-                                }
+                         self.tick.frame=rect;
+                     }
                      completion:nil];
     
     [UIView animateWithDuration:1.5
                           delay:0
                         options:UIViewAnimationCurveEaseInOut
                      animations:^{
-                                    self.tick.alpha = 1;
-                                }
+                         self.tick.alpha = 1;
+                     }
                      completion:^(BOOL finished){
-        if(finished){
-            self.level++;
-            self.numberOfRightChoice++;
-            self.score = self.score + 100;
-            [UIView animateWithDuration:1
-                             animations:^{self.tick.alpha = 0;}
-                             completion:^(BOOL finished){
-                                                            if (finished) {
-                                                                [self setupDisplay];
-                                                            }
-                            }
-            ];
-        }
-    }];
+                         if(finished){
+                             self.level++;
+                             self.numberOfRightChoice++;
+                             self.score = self.score + 100;
+                             [UIView animateWithDuration:1
+                                              animations:^{self.tick.alpha = 0;}
+                                              completion:^(BOOL finished){
+                                                  if (finished) {
+                                                      [self setupDisplay];
+                                                  }
+                                              }
+                              ];
+                         }
+                     }];
 }
 
 - (void)wrongNumber:(int)no{
@@ -245,6 +265,11 @@
 }
 
 - (IBAction)image1Tapped:(id)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = self.image1Name;
+    question.imageName = self.rightImage;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==0) {
         [self correctNumber:0];
     }
@@ -252,13 +277,25 @@
         [self wrongNumber:0];
     }
 }
+
 - (IBAction)image2Tapped:(id)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = self.image2Name;
+    question.imageName = self.rightImage;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==1) {
         [self correctNumber:1];    }
     else{
         [self wrongNumber:1];    }
 }
+
 - (IBAction)image3Tapped:(id)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = self.image3Name;
+    question.imageName = self.rightImage;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==2) {
         [self correctNumber:2];
     }
@@ -266,7 +303,13 @@
         [self wrongNumber:2];
     }
 }
+
 - (IBAction)image4Tapped:(id)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = self.image4Name;
+    question.imageName = self.rightImage;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==3) {
         [self correctNumber:3];
     }
@@ -283,55 +326,48 @@
     self.levelLabel.text = [NSString stringWithFormat:@"Lv %d",self.level];
     self.scoreLabel.text = [NSString stringWithFormat:@"%d",self.score];
     self.liveLeftLabel.text = [NSString stringWithFormat:@"%d",self.lifeLeft];
-    NSString* image1Name = [self.data takeRandomImage];
-    [self.image1 setImage:[UIImage imageWithContentsOfFile:image1Name]];
+    self.image1Name = [self.data takeRandomImage];
+    [self.image1 setImage:[UIImage imageWithContentsOfFile:self.image1Name]];
     
-    NSString* image2Name;
     do {
-        image2Name = [self.data takeRandomImage];
-    } while ([image2Name isEqualToString:image1Name]);
-    [self.image2 setImage:[UIImage imageWithContentsOfFile:image2Name]];
+        self.image2Name = [self.data takeRandomImage];
+    } while ([self.image2Name isEqualToString:self.image1Name]);
+    [self.image2 setImage:[UIImage imageWithContentsOfFile:self.image2Name]];
     
-    NSString* image3Name;
     do {
-        image3Name = [self.data takeRandomImage];
-    } while ([image3Name isEqualToString:image1Name] ||
-             [image3Name isEqualToString:image2Name]);
-    [self.image3 setImage:[UIImage imageWithContentsOfFile:image3Name]];
+        self.image3Name = [self.data takeRandomImage];
+    } while ([self.image3Name isEqualToString:self.image1Name] ||
+             [self.image3Name isEqualToString:self.image2Name]);
+    [self.image3 setImage:[UIImage imageWithContentsOfFile:self.image3Name]];
     
-    NSString* image4Name;
     do {
-        image4Name = [self.data takeRandomImage];
-    } while ([image4Name isEqualToString:image1Name] ||
-             [image4Name isEqualToString:image2Name] ||
-             [image4Name isEqualToString:image3Name]
-        );
-    [self.image4 setImage:[UIImage imageWithContentsOfFile:image4Name]];
+        self.image4Name = [self.data takeRandomImage];
+    } while ([self.image4Name isEqualToString:self.image1Name] ||
+             [self.image4Name isEqualToString:self.image2Name] ||
+             [self.image4Name isEqualToString:self.image3Name]
+             );
+    [self.image4 setImage:[UIImage imageWithContentsOfFile:self.image4Name]];
+    
     NSString *wordInImage;
     switch (self.rightChoice) {
         case 0:
-            wordInImage = image1Name;
+            wordInImage = self.image1Name;
             break;
         case 1:
-            wordInImage = image2Name;
+            wordInImage = self.image2Name;
             break;
         case 2:
-            wordInImage = image3Name;
+            wordInImage = self.image3Name;
             break;
         case 3:
-            wordInImage = image4Name;
+            wordInImage = self.image4Name;
             break;
         default:
             break;
     }
-    NSArray* components;
-    if ([wordInImage hasSuffix:@".jpg"]) {
-        components = [wordInImage componentsSeparatedByString:@".jpg"];
-    }
-    else{
-        components = [wordInImage componentsSeparatedByString:@".png"];
-    }
-        self.word.text = [components objectAtIndex:0];
+    self.rightImage = wordInImage;
+    NSArray* components = [wordInImage componentsSeparatedByString:@".jpg"];
+    self.word.text = [components objectAtIndex:0];
     NSLog(@"%d",self.rightChoice);
 }
 
@@ -351,15 +387,15 @@
 	detailVC.textForlabel = [NSString stringWithFormat:@"%d",self.score];
     detailVC.textForAnswer = [NSString stringWithFormat:@"%d",self.level-1];
     detailVC.textForRight = [NSString stringWithFormat:@"%d",self.numberOfRightChoice];
+    detailVC.statisticData = self.statisticData;
 	detailVC.delegate = self;
 	[self presentViewController:detailVC animated:YES completion:nil];
-
 }
 
 - (void) dismissMe:(UIViewController *) viewController {
+    [self.statisticData clear];
     [self viewDidLoad];
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 @end

@@ -22,6 +22,7 @@
 - (NSString *)loadScore{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *loadstring = [defaults objectForKey:@"savestring"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"savestring"];
     NSLog(@"load !");
     return loadstring;
 }

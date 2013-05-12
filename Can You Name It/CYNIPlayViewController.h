@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CYNIPlayViewController : UIViewController
+
 @property (strong,nonatomic) NSString* package;
+
 @end

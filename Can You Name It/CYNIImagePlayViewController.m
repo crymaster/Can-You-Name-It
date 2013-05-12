@@ -10,6 +10,7 @@
 #import "CYNIData.h"
 #import "CYNI_highScoreMemory.h"
 #import "CYNIResultViewController.h"
+#import "StatisticData.h"
 
 @interface CYNIImagePlayViewController () <CYNIResultdelegate>
 @property (weak, nonatomic) IBOutlet UILabel *word;
@@ -31,16 +32,19 @@
 @property (strong,nonatomic) CYNIData *data;
 @property (weak, nonatomic) IBOutlet UIImageView *image1;
 @property (nonatomic) int rightChoice;
+@property (nonatomic) NSString *rightAnswer;
 @property (nonatomic) int numberOfRightChoice;
 @property (nonatomic) int score;
 @property (nonatomic) int level;
 @property (nonatomic) int lifeLeft;
 @property (nonatomic,strong) CYNI_highScoreMemory *mem;
+@property (strong, nonatomic) StatisticData *statisticData;
 @end
 
 @implementation CYNIImagePlayViewController
 
 @synthesize mem = _mem;
+
 // <--- initialize of high score memory -->
 - (CYNI_highScoreMemory *) mem
 {
@@ -56,6 +60,12 @@
         _data = [[CYNIData alloc] initWithPackage:self.package];
     }
     return _data;
+}
+
+-(StatisticData *) statisticData {
+    if(_statisticData == nil)
+        _statisticData = [[StatisticData alloc] init];
+    return _statisticData;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -88,6 +98,7 @@
     self.heartArray = [NSArray arrayWithObjects:self.heart1, self.heart2,self.heart3,self.heart4,self.heart5, nil];
     [self setupDisplay];
 }
+
 - (IBAction)stopPressed:(id)sender {
     [self stopPlaying];
 }
@@ -246,7 +257,12 @@
                      }];
 }
 
-- (IBAction)answerButton1Pressed:(id)sender {
+- (IBAction)answerButton1Pressed:(UIButton *)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = sender.currentTitle;
+    question.imageName = self.rightAnswer;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==0) {
         [self correctNumber:0];
     }
@@ -254,7 +270,12 @@
         [self wrongNumber:0];
     }
 }
-- (IBAction)answerButton2Pressed:(id)sender {
+- (IBAction)answerButton2Pressed:(UIButton *)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = sender.currentTitle;
+    question.imageName = self.rightAnswer;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==1) {
         [self correctNumber:1];
     }
@@ -263,7 +284,12 @@
     }
 }
 
-- (IBAction)answerButton3Pressed:(id)sender {
+- (IBAction)answerButton3Pressed:(UIButton *)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = sender.currentTitle;
+    question.imageName = self.rightAnswer;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==2) {
         [self correctNumber:2];
     }
@@ -271,7 +297,12 @@
         [self wrongNumber:2];
     }
 }
-- (IBAction)answerButton4Pressed:(id)sender {
+- (IBAction)answerButton4Pressed:(UIButton *)sender {
+    Question *question = [[Question alloc] init];
+    question.playerAnswer = sender.currentTitle;
+    question.imageName = self.rightAnswer;
+    [self.statisticData addQuestion:question];
+    
     if (self.rightChoice==3) {
         [self correctNumber:3];
     }
@@ -284,6 +315,7 @@
     if (self.lifeLeft == 0) {
         [self stopPlaying];
     }
+    
     self.rightChoice = rand()%4;
     self.levelLabel.text = [NSString stringWithFormat:@"Lv %d",self.level];
     self.scoreLabel.text = [NSString stringWithFormat:@"%d",self.score];
@@ -313,54 +345,37 @@
     switch (self.rightChoice) {
         case 0:
             [self.image1 setImage:[UIImage imageWithContentsOfFile:image1Name]];
+            self.rightAnswer = image1Name;
             break;
         case 1:
             [self.image1 setImage:[UIImage imageWithContentsOfFile:image2Name]];
+            self.rightAnswer = image2Name;
             break;
         case 2:
             [self.image1 setImage:[UIImage imageWithContentsOfFile:image3Name]];
+            self.rightAnswer = image3Name;
             break;
         case 3:
             [self.image1 setImage:[UIImage imageWithContentsOfFile:image4Name]];
+            self.rightAnswer = image4Name;
             break;
         default:
             break;
     }
     
-    NSArray* components;
-    if ([image1Name hasSuffix:@".jpg"]) {
-        components = [image1Name componentsSeparatedByString:@".jpg"];
-    }
-    else{
-        components = [image1Name componentsSeparatedByString:@".png"];
-    }
+    NSArray* components = [image1Name componentsSeparatedByString:@".jpg"];
     image1Name = [components objectAtIndex:0];
     [self.answerButton1 setTitle:image1Name forState:NULL];
     
-    if ([image2Name hasSuffix:@".jpg"]) {
-        components = [image2Name componentsSeparatedByString:@".jpg"];
-    }
-    else{
-        components = [image2Name componentsSeparatedByString:@".png"];
-    }
+    components = [image2Name componentsSeparatedByString:@".jpg"];
     image2Name = [components objectAtIndex:0];
     [self.answerButton2 setTitle:image2Name forState:NULL];
     
-    if ([image3Name hasSuffix:@".jpg"]) {
-        components = [image3Name componentsSeparatedByString:@".jpg"];
-    }
-    else{
-        components = [image3Name componentsSeparatedByString:@".png"];
-    }
+    components = [image3Name componentsSeparatedByString:@".jpg"];
     image3Name = [components objectAtIndex:0];
     [self.answerButton3 setTitle:image3Name forState:NULL];
     
-    if ([image4Name hasSuffix:@".jpg"]) {
-        components = [image4Name componentsSeparatedByString:@".jpg"];
-    }
-    else{
-        components = [image4Name componentsSeparatedByString:@".png"];
-    }
+    components = [image4Name componentsSeparatedByString:@".jpg"];
     image4Name = [components objectAtIndex:0];
     [self.answerButton4 setTitle:image4Name forState:NULL];
 }
@@ -375,18 +390,20 @@
 {
     NSString *score = [NSString stringWithFormat:@"%d",self.score];
     NSLog(@"%@",score);
+    
     CYNIResultViewController * detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ResultVC"];
     detailVC.highScoreFlag = [self.mem overWrittenHighScore:score];
     detailVC.textForHighScore = [self.mem loadScore];
 	detailVC.textForlabel = [NSString stringWithFormat:@"%d",self.score];
     detailVC.textForAnswer = [NSString stringWithFormat:@"%d",self.level-1];
     detailVC.textForRight = [NSString stringWithFormat:@"%d",self.numberOfRightChoice];
+    detailVC.statisticData = self.statisticData;
 	detailVC.delegate = self;
 	[self presentViewController:detailVC animated:YES completion:nil];
-    
 }
 
 - (void) dismissMe:(UIViewController *) viewController {
+    [self.statisticData clear];
     [self viewDidLoad];
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
